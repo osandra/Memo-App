@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecordCollectionViewCell" id="gTV-IL-0wX" customClass="RecordCollectionViewCell" customModule="healingStation" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="229" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="229" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tfg-Tl-v6d" userLabel="recordPhoto">
+                        <rect key="frame" x="0.0" y="0.0" width="229" height="150"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ddddddd" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZ1-O6-kXr" userLabel="recordTitle">
+                        <rect key="frame" x="13" y="162" width="170" height="28"/>
+                        <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="12"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ijg-63-XTg">
+                        <rect key="frame" x="189" y="160" width="30" height="30"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filledClover" translatesAutoresizingMaskIntoConstraints="NO" id="tGx-uH-Alk">
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qBK-pz-xiE">
+                                <rect key="frame" x="0.0" y="-6" width="30" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="1">
+                                    <color key="titleColor" red="0.93730694059999997" green="0.94084089989999997" blue="0.96470981840000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="qBK-pz-xiE" firstAttribute="leading" secondItem="Ijg-63-XTg" secondAttribute="leading" id="6F7-Ix-Kvc"/>
+                            <constraint firstAttribute="bottom" secondItem="tGx-uH-Alk" secondAttribute="bottom" id="8TJ-qu-GCc"/>
+                            <constraint firstAttribute="trailing" secondItem="tGx-uH-Alk" secondAttribute="trailing" id="AhX-Hx-yhO"/>
+                            <constraint firstAttribute="bottom" secondItem="qBK-pz-xiE" secondAttribute="bottom" id="BdE-d8-d62"/>
+                            <constraint firstItem="tGx-uH-Alk" firstAttribute="leading" secondItem="Ijg-63-XTg" secondAttribute="leading" id="GA0-G7-YdM"/>
+                            <constraint firstAttribute="width" constant="30" id="PkK-Vp-OnN"/>
+                            <constraint firstAttribute="height" constant="30" id="g3r-50-5P2"/>
+                            <constraint firstItem="tGx-uH-Alk" firstAttribute="top" secondItem="Ijg-63-XTg" secondAttribute="top" id="jFe-ea-cUh"/>
+                            <constraint firstItem="qBK-pz-xiE" firstAttribute="top" secondItem="Ijg-63-XTg" secondAttribute="top" constant="-6" id="oPd-Ns-bmF"/>
+                            <constraint firstAttribute="trailing" secondItem="qBK-pz-xiE" secondAttribute="trailing" id="yNX-gk-pyd"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="IZ1-O6-kXr" firstAttribute="top" secondItem="tfg-Tl-v6d" secondAttribute="bottom" constant="12" id="Dza-PR-bMm"/>
+                <constraint firstItem="Ijg-63-XTg" firstAttribute="top" secondItem="tfg-Tl-v6d" secondAttribute="bottom" constant="10" id="GIJ-0Z-AKt"/>
+                <constraint firstAttribute="bottom" secondItem="Ijg-63-XTg" secondAttribute="bottom" constant="10" id="K45-G0-idV"/>
+                <constraint firstAttribute="bottom" secondItem="IZ1-O6-kXr" secondAttribute="bottom" constant="10" id="Uno-cS-g9G"/>
+                <constraint firstItem="tfg-Tl-v6d" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="d9N-WZ-6PN"/>
+                <constraint firstItem="tfg-Tl-v6d" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="e8m-GU-ubr"/>
+                <constraint firstItem="Ijg-63-XTg" firstAttribute="leading" secondItem="IZ1-O6-kXr" secondAttribute="trailing" constant="6" id="eJQ-mQ-f5w"/>
+                <constraint firstAttribute="trailing" secondItem="tfg-Tl-v6d" secondAttribute="trailing" id="iA7-FL-loR"/>
+                <constraint firstItem="tfg-Tl-v6d" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="iGL-lW-8Pb"/>
+                <constraint firstAttribute="trailing" secondItem="Ijg-63-XTg" secondAttribute="trailing" constant="10" id="lwu-mp-wKR"/>
+                <constraint firstItem="IZ1-O6-kXr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="13" id="wAr-Sk-hLb"/>
+                <constraint firstAttribute="trailing" secondItem="tfg-Tl-v6d" secondAttribute="trailing" id="wyD-sS-MX2"/>
+            </constraints>
+            <size key="customSize" width="229" height="260"/>
+            <connections>
+                <outlet property="ratingNum" destination="qBK-pz-xiE" id="e5W-tJ-bCo"/>
+                <outlet property="recordPhoto" destination="tfg-Tl-v6d" id="MkG-xD-oHF"/>
+                <outlet property="recordTitle" destination="IZ1-O6-kXr" id="pD0-Sv-rUi"/>
+            </connections>
+            <point key="canvasLocation" x="-212.31884057971016" y="129.91071428571428"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="filledClover" width="682.5" height="682.5"/>
+    </resources>
+</document>

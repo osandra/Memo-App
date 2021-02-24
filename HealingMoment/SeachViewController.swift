@@ -1,0 +1,123 @@
+//
+//  seachViewController.swift
+//  HealingMoment
+//
+//  Created by heawon on 2021/02/23.
+//
+
+import UIKit
+import RealmSwift
+
+class SeachViewController: UIViewController {
+    //MARK: - Property
+    let realm = try! Realm()
+    var resultRecordArray: Results<Record>? {
+        didSet {
+            showTable()
+        }
+    }
+    var emptyFooterLabel: UILabel = UILabel.makeMediumLabel(fontSize: 15)
+    func setLayout(){
+      emptyFooterLabel.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
+      emptyFooterLabel.textAlignment = .center
+      emptyFooterLabel.translatesAutoresizingMaskIntoConstraints = true
+
+      searchBar.placeholder = "제목과 내용으로 검색하기"
+      searchBar.searchTextField.backgroundColor = .systemBackground
+      searchBar.layer.shadowColor = UIColor.gray.cgColor
+      searchBar.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+      searchBar.layer.shadowRadius = 1.0
+      searchBar.layer.shadowOpacity = 0.2
+    }
+
+    lazy var tableviewHeight: CGFloat = 0.0
+    @IBOutlet weak var resultTableView: UITableView!
+    
+    var searchBar: UISearchBar = UISearchBar(frame: CGRect(x: 0,y: 0, width: UIScreen.main.bounds.width - 50, height: 20))
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBar.delegate = self
+        
+        resultTableView.showsVerticalScrollIndicator = false
+        resultTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        resultTableView.tableFooterView = emptyFooterLabel
+
+        resultTableView.delegate = self
+        resultTableView.dataSource = self
+        setLayout()
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showTable()
+        let rightBarbutton = UIBarButtonItem(customView: searchBar)
+        self.navigationItem.rightBarButtonItem = rightBarbutton
+    }
+    
+    func showTable(){
+        resultTableView.reloadData()
+    }
+    
+    @objc func goToHome(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.searchBar.endEditing(true)
+   }
+}
+
+extension SeachViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchedText = searchBar.text {
+        resultRecordArray = realm.objects(Record.self).filter("title CONTAINS[cd] '\(searchedText)' OR descriptionText CONTAINS[cd] '\(searchedText)'")
+            self.searchBar.endEditing(true)
+            if resultRecordArray?.count == 0 {
+                emptyFooterLabel.text = "\(searchedText)의 검색 결과가 없어요."
+            } else {
+                emptyFooterLabel.text = ""
+            }
+        }
+    }
+
+    //사용자가 x버튼 누르면
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            resultRecordArray = nil
+            emptyFooterLabel.text = ""
+        }
+    }
+}
+
+extension SeachViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let eventStoryboard = UIStoryboard(name: "Event", bundle: nil)
+        guard let recordDetailVC =
+                eventStoryboard.instantiateViewController(identifier: "RecordDetailViewController") as? RecordDetailViewController else { return }
+                
+        recordDetailVC.recordData = resultRecordArray?[indexPath.row]
+        self.navigationController?.pushViewController(recordDetailVC, animated: true)
+        resultTableView.deselectRow(at: indexPath, animated: true)
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     
+        return resultRecordArray?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = resultTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
+        cell.recordImage.image = UIImage(data: resultRecordArray?[indexPath.row].imageData ?? DefaultData.defaultData!)
+        cell.titleLabel.text = resultRecordArray?[indexPath.row].title
+        cell.descriptionLabel.text = resultRecordArray?[indexPath.row].descriptionText
+        cell.ratingLabel.text = String((resultRecordArray?[indexPath.row].healingRating)!)
+        return cell
+    }
+    
+    //각 셀의 높이 120으로 설정
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
+}
