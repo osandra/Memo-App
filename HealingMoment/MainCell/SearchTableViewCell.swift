@@ -14,15 +14,21 @@ class SearchTableViewCell: UITableViewCell {
     let imageContrainerView: UIView = UIView.defaultView()
     
     var titleLabel: UILabel = UILabel.makeMediumLabel(fontSize: 15)
-    var descriptionLabel: UILabel = UILabel.makeMediumLabel(fontSize: 11)
     var ratingLabel: UILabel = UILabel.makeMediumLabel(fontSize: 13)
-
+    
+    var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.isEditable = false
+        textView.isUserInteractionEnabled = false
+        textView.backgroundColor = .clear
+        textView.font = UIFont.MyFont.SpoqeMedium(customSize: 11)
+        textView.textAlignment = .left
+        return textView
+    }()
+    
     func setPropety(){
         titleLabel.textAlignment = .left
-        descriptionLabel.textAlignment = .left
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.sizeToFit()
-        
         ratingLabel.textAlignment = .center
         ratingLabel.textColor = .black
         ratingLabel.font = UIFont.boldSystemFont(ofSize: 13)
@@ -46,65 +52,30 @@ class SearchTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setPropety()
-        
-        imageContrainerView.addSubview(recordImage)
+        imageContrainerView.center.y = contentView.center.y
+        imageContrainerView.frame = CGRect(x: 10, y: 10, width: 100, height: 100)
+        ratingView.frame = CGRect(x: 0, y: imageContrainerView.height - 30, width: 30, height: 30)
+        ratingLabel.frame = CGRect(x: 0, y: -3, width: 30, height: 30)
+        clovarImage.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        recordImage.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+       
+        wordContrainerView.center.y = contentView.center.y
+        let wordWidth = UIScreen.main.bounds.width-imageContrainerView.width-30
+        wordContrainerView.frame = CGRect(x: recordImage.right+20, y: contentView.top+10, width: wordWidth, height: 100)
+        titleLabel.frame = CGRect(x: 0, y: 0, width: wordWidth, height: 30)
+        descriptionTextView.frame = CGRect(x: 0, y: 30, width: wordWidth, height: 70)
+    
         ratingView.addSubview(clovarImage)
         ratingView.addSubview(ratingLabel)
+        imageContrainerView.addSubview(recordImage)
         imageContrainerView.addSubview(ratingView)
         self.contentView.addSubview(imageContrainerView)
-        
         wordContrainerView.addSubview(titleLabel)
-        wordContrainerView.addSubview(descriptionLabel)
+        wordContrainerView.addSubview(descriptionTextView)
         self.contentView.addSubview(wordContrainerView)
-        
-        //레이아웃 설정
-        NSLayoutConstraint.activate([
-   
-        imageContrainerView.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor),
-        imageContrainerView.leadingAnchor.constraint(equalTo:self.contentView.leadingAnchor, constant: 10),
-        imageContrainerView.topAnchor.constraint(equalTo:self.contentView.topAnchor, constant: 10),
-        imageContrainerView.widthAnchor.constraint(equalToConstant:100),
-        imageContrainerView.heightAnchor.constraint(equalToConstant:100),
-            
-        ratingView.bottomAnchor.constraint(equalTo:self.imageContrainerView.bottomAnchor),
-        ratingView.leadingAnchor.constraint(equalTo: self.imageContrainerView.leadingAnchor),
-        ratingView.widthAnchor.constraint(equalToConstant:30),
-        ratingView.heightAnchor.constraint(equalToConstant:30),
-            
-        ratingLabel.leadingAnchor.constraint(equalTo:self.ratingView.leadingAnchor),
-        ratingLabel.trailingAnchor.constraint(equalTo:self.ratingView.trailingAnchor),
-        ratingLabel.topAnchor.constraint(equalTo:self.ratingView.topAnchor, constant: -3),
-        ratingLabel.bottomAnchor.constraint(equalTo:self.ratingView.bottomAnchor),
-            
-        clovarImage.leadingAnchor.constraint(equalTo:self.ratingView.leadingAnchor),
-        clovarImage.trailingAnchor.constraint(equalTo:self.ratingView.trailingAnchor),
-        clovarImage.topAnchor.constraint(equalTo:self.ratingView.topAnchor),
-        clovarImage.bottomAnchor.constraint(equalTo:self.ratingView.bottomAnchor),
-         
-        recordImage.leadingAnchor.constraint(equalTo:self.imageContrainerView.leadingAnchor),
-        recordImage.trailingAnchor.constraint(equalTo:self.imageContrainerView.trailingAnchor),
-        recordImage.topAnchor.constraint(equalTo:self.imageContrainerView.topAnchor),
-        recordImage.bottomAnchor.constraint(equalTo:self.imageContrainerView.bottomAnchor),
-            
-        wordContrainerView.leadingAnchor.constraint(equalTo:self.recordImage.trailingAnchor, constant: 20),
-        wordContrainerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-        wordContrainerView.trailingAnchor.constraint(equalTo:self.contentView.trailingAnchor, constant:-10),
-        wordContrainerView.heightAnchor.constraint(equalToConstant:100),
- 
-        titleLabel.topAnchor.constraint(equalTo:self.wordContrainerView.topAnchor),
-        titleLabel.leadingAnchor.constraint(equalTo:self.wordContrainerView.leadingAnchor),
-        titleLabel.trailingAnchor.constraint(equalTo:self.wordContrainerView.trailingAnchor),
-        titleLabel.heightAnchor.constraint(equalToConstant: 30),
-
-        descriptionLabel.topAnchor.constraint(equalTo:self.titleLabel.bottomAnchor),
-        descriptionLabel.leadingAnchor.constraint(equalTo:self.wordContrainerView.leadingAnchor),
-        descriptionLabel.trailingAnchor.constraint(equalTo:self.wordContrainerView.trailingAnchor),
-        descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.wordContrainerView.bottomAnchor),
-        ])
     }
 
     required init?(coder aDecoder: NSCoder) {

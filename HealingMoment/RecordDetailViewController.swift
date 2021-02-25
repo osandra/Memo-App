@@ -83,9 +83,6 @@ class RecordDetailViewController: UIViewController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정", style: .default) { (action) in
             guard let recordVC = self.storyboard?.instantiateViewController(identifier: "AddRecordViewController") as? AddRecordViewController else { return }
-//            recordVC.getParentCategory = self.realm.objects(Category.self).filter("_id == \(recordData?.parentCategory)")[0]
-
-           // recordVC.getParentCategory = self.recordData?.parentCategory[0]
             recordVC.getParentCategory = self.recordData?.parentCategory as? Category
             recordVC.editRecord = self.recordData
             self.navigationController?.pushViewController(recordVC, animated: true)

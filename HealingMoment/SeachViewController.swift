@@ -63,9 +63,6 @@ class SeachViewController: UIViewController {
     @objc func goToHome(){
         self.navigationController?.popViewController(animated: true)
     }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-        self.searchBar.endEditing(true)
-   }
 }
 
 extension SeachViewController: UISearchBarDelegate {
@@ -100,19 +97,19 @@ extension SeachViewController: UITableViewDelegate, UITableViewDataSource {
                 
         recordDetailVC.recordData = resultRecordArray?[indexPath.row]
         self.navigationController?.pushViewController(recordDetailVC, animated: true)
-        resultTableView.deselectRow(at: indexPath, animated: true)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
      
         return resultRecordArray?.count ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = resultTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
         cell.recordImage.image = UIImage(data: resultRecordArray?[indexPath.row].imageData ?? DefaultData.defaultData!)
         cell.titleLabel.text = resultRecordArray?[indexPath.row].title
-        cell.descriptionLabel.text = resultRecordArray?[indexPath.row].descriptionText
+        cell.descriptionTextView.text = resultRecordArray?[indexPath.row].descriptionText
         cell.ratingLabel.text = String((resultRecordArray?[indexPath.row].healingRating)!)
+        cell.selectionStyle = .none
         return cell
     }
     
