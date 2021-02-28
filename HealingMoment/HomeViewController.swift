@@ -52,15 +52,19 @@ class HomeViewController: UIViewController {
         self.navigationController?.navigationBar.layer.shadowOpacity = 0.1
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.MyFont.SpoqeMedium(customSize: 16)]
         
-        // 검색 버튼 생성
+        // 오른쪽 검색 버튼 생성
         let rightBarbutton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(goToSearchView))
         self.navigationItem.setRightBarButton(rightBarbutton, animated: true)
         homeCollectionView.reloadData()
     }
 
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationItem.title = " "
+    }
+    @objc func showSideMenu(){
+        
     }
 
     @objc func goToSearchView(){

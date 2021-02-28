@@ -48,7 +48,7 @@ class RecordViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidLoad()
         //다음 뷰에서 Back글자 안 보이게
-        self.navigationItem.title = " "
+        self.navigationItem.title = parentCategory?.name
         recordCollectionView.reloadData()
 
         self.view.backgroundColor = .white

@@ -65,7 +65,7 @@ class SearchTableViewCell: UITableViewCell {
         wordContrainerView.center.y = contentView.center.y
         let wordWidth = UIScreen.main.bounds.width-imageContrainerView.width-30
         wordContrainerView.frame = CGRect(x: recordImage.right+20, y: contentView.top+10, width: wordWidth, height: 100)
-        titleLabel.frame = CGRect(x: 0, y: 0, width: wordWidth, height: 30)
+        titleLabel.frame = CGRect(x: 5, y: 0, width: wordWidth, height: 30)
         descriptionTextView.frame = CGRect(x: 0, y: 30, width: wordWidth, height: 70)
     
         ratingView.addSubview(clovarImage)
