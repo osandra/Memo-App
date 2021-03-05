@@ -27,6 +27,7 @@
 		59AAB70425E129F80088C763 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAB70325E129F80088C763 /* UIAlertController+Extension.swift */; };
 		59ADFDDA25DACF66008642FD /* RecordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ADFDD825DACF66008642FD /* RecordCollectionViewCell.swift */; };
 		59ADFDDB25DACF66008642FD /* RecordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59ADFDD925DACF66008642FD /* RecordCollectionViewCell.xib */; };
+		59BBE9FD25F2649900CFF975 /* CustomPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */; };
 		59BC4B2925E62E8A002177DF /* UILabel+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC4B2825E62E8A002177DF /* UILabel+extension.swift */; };
 		59BC4B2C25E634FE002177DF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC4B2B25E634FE002177DF /* UIView+Extension.swift */; };
 		59C3DBE725D8D3F00011CD05 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3DBE625D8D3F00011CD05 /* RatingControl.swift */; };
@@ -67,6 +68,7 @@
 		59AAB70325E129F80088C763 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		59ADFDD825DACF66008642FD /* RecordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewCell.swift; sourceTree = "<group>"; };
 		59ADFDD925DACF66008642FD /* RecordCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordCollectionViewCell.xib; sourceTree = "<group>"; };
+		59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpViewController.swift; sourceTree = "<group>"; };
 		59BC4B2825E62E8A002177DF /* UILabel+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+extension.swift"; sourceTree = "<group>"; };
 		59BC4B2B25E634FE002177DF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		59C3DBE625D8D3F00011CD05 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				59274C7625D62FFF00FAC1AF /* AddRecordViewController.swift */,
 				59014AEB25DC390A00466B46 /* RecordDetailViewController.swift */,
 				5937E80F25E011ED003B2FF2 /* ShowOnlyPhotoViewController.swift */,
+				59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				59014AE925DC29D700466B46 /* Date+Extension.swift in Sources */,
 				5937E81025E011ED003B2FF2 /* ShowOnlyPhotoViewController.swift in Sources */,
 				59EC837425D418E000D6C900 /* AppDelegate.swift in Sources */,
+				59BBE9FD25F2649900CFF975 /* CustomPopUpViewController.swift in Sources */,
 				59EC837625D418E000D6C900 /* SceneDelegate.swift in Sources */,
 				596AA37F25E543440042FD4D /* SearchTableViewCell.swift in Sources */,
 				59EC83BF25D426C200D6C900 /* AddCategoryViewController.swift in Sources */,

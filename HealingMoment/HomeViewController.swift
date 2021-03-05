@@ -140,25 +140,31 @@ extension HomeViewController {
             self.navigationController?.pushViewController(addCategoryVC, animated: true)
         }
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive, handler: { (action) in
-            //선택한 카테고리를 데이터베이스에서 삭제하기
-            if let categoryItem = self.categoryArray?[sender.tag] {
-                do {
-                    let childRecords = categoryItem.records
-                    try self.realm.write {
-                        self.realm.delete(childRecords)
-
-                        self.realm.delete(categoryItem)
-                        DispatchQueue.main.async {
-                            UIView.transition(with: self.homeCollectionView, duration: 0.3, options: .transitionCrossDissolve, animations: {self.homeCollectionView.reloadData()},
-                                  completion: { action in
-                                    UIView.transition(with: self.homeCollectionView, duration: 0.5, options: .curveLinear, animations: {self.checkEmpty()}, completion: nil)
-                                  })
+            //카테고리 삭제 시 해당 카테고리에 있는 모든 기록이 삭제된다는 것을 알려주는 팝업 뷰 보여주기
+            let popUpVC = self.storyboard?.instantiateViewController(identifier: "CustomPopUpViewController") as! CustomPopUpViewController
+            popUpVC.modalPresentationStyle = .overCurrentContext
+            popUpVC.modalTransitionStyle = .crossDissolve
+            popUpVC.deleteClosure = {
+                if let categoryItem = self.categoryArray?[sender.tag] {
+                    do {
+                        let childRecords = categoryItem.records
+                        try self.realm.write {
+                            self.realm.delete(childRecords)
+                            
+                            self.realm.delete(categoryItem)
+                            DispatchQueue.main.async {
+                                UIView.transition(with: self.homeCollectionView, duration: 0.3, options: .transitionCrossDissolve, animations: {self.homeCollectionView.reloadData()},
+                                                  completion: { action in
+                                                    UIView.transition(with: self.homeCollectionView, duration: 0.5, options: .curveLinear, animations: {self.checkEmpty()}, completion: nil)
+                                                  })
+                            }
                         }
+                    } catch {
+                        print("Can't delete category \(error)")
                     }
-                } catch {
-                    print("Can't delete category \(error)")
                 }
             }
+            self.present(popUpVC, animated: true, completion: nil)
         })
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(editAction)
