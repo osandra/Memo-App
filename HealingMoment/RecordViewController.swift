@@ -3,28 +3,91 @@
 //  healingMoments
 //
 //  Created by heawon on 2021/02/12.
-//
 
 import UIKit
 import RealmSwift
 
 class RecordViewController: UIViewController {
+    @IBOutlet weak var showSelectedSortText: UIButton!
+    @IBOutlet weak var changeSortView: UIStackView!
     let realm = try! Realm()
     let emptyView = UIView()
     //MARK: - Property
     var recordArray: Results<Record>?
-    var parentCategory: Category? {
-        didSet {
-            //값이 넘어오면 해당 값을 통해 해당 카테고리에 등록템 record 객체 배열을 가져오기
-            getRecordData()
-        }
-    }
+    var parentCategory: Category?
+    var sortStandard: String?
+    //info.plist
+    @IBOutlet weak var recordCollectionView: UICollectionView!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.recordCollectionView.backgroundColor = .systemBackground
+        self.view.backgroundColor = .systemBackground
+        self.showSelectedSortText.setTitleColor(.label, for: .normal)
+        
         setFlowLayout()
+        //changeSortView에 Tap Gesture 추가
+        changeSortView.isUserInteractionEnabled = true
+        let didTapGesture = UITapGestureRecognizer(target: self, action: #selector(showChoicePopUp))
+        changeSortView.addGestureRecognizer(didTapGesture)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidLoad()
+        //데이터 불러오기
+        getRecordData()
+
+        self.navigationItem.title = parentCategory?.name
+        recordCollectionView.reloadData()
+
+        // Record 추가하기 버튼 생성
+        let rightBarbutton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addRecord))
+        self.navigationItem.setRightBarButton(rightBarbutton, animated: true)
+        //현제 저장된 데이터가 하나도 없는지 확인
+        checkEmpty()
+        
+        recordCollectionView.delegate = self
+        recordCollectionView.dataSource = self
+        recordCollectionView.register(UINib(nibName: "RecordCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: RecordCollectionViewCell.identifier)
+    }
+    
+    func getRecordData(){
+        //저장한 UserDefaults 불러옴
+        sortStandard = UserDefaults.standard.string(forKey: "sort")
+        if sortStandard == "" || sortStandard == "time" {
+            recordArray = parentCategory?.records.sorted(byKeyPath: "date", ascending: true)
+            self.showSelectedSortText.setTitle("시간순", for: .normal)
+        } else  {
+            recordArray = parentCategory?.records.sorted(byKeyPath: "healingRating", ascending: false)
+            self.showSelectedSortText.setTitle("만족도순", for: .normal)
+        }
+        self.recordCollectionView.reloadData()
+    }
+    
+    @objc func showChoicePopUp(){
+        var topHeight: CGFloat {
+            //changeSortView의 bottom을 기준으로 팝업 프레임 설정하기 위해
+            return self.changeSortView.bottom
+        }
+        
+        let popUpFilterVC = self.storyboard?.instantiateViewController(identifier: "FilterPopViewController") as! FilterPopViewController
+        popUpFilterVC.modalPresentationStyle = .overCurrentContext
+        popUpFilterVC.modalTransitionStyle = .crossDissolve
+        popUpFilterVC.topHeight = Int(topHeight)
+
+        popUpFilterVC.ratingSortClosure = {
+            self.sortStandard = "rating"
+            //정렬 기준을 UserDefaults에 저장
+            UserDefaults.standard.set(self.sortStandard, forKey: "sort")
+            self.getRecordData()
+        }
+        popUpFilterVC.timeSortClosure = {
+            self.sortStandard = "time"
+            UserDefaults.standard.set(self.sortStandard, forKey: "sort")
+            self.getRecordData()
+        }
+        self.present(popUpFilterVC, animated: true, completion: nil)
     }
     
     private func setFlowLayout() {
@@ -41,27 +104,8 @@ class RecordViewController: UIViewController {
             flowLayout.itemSize = CGSize(width: width, height: height)
         }
         self.recordCollectionView.collectionViewLayout = flowLayout
-
     }
-    @IBOutlet weak var recordCollectionView: UICollectionView!
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidLoad()
-        //다음 뷰에서 Back글자 안 보이게
-        self.navigationItem.title = parentCategory?.name
-        recordCollectionView.reloadData()
-
-        self.view.backgroundColor = .white
-        // Record 추가하기 버튼 생성
-        let rightBarbutton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addRecord))
-        self.navigationItem.setRightBarButton(rightBarbutton, animated: true)
-
-        checkEmpty()
-        recordCollectionView.delegate = self
-        recordCollectionView.dataSource = self
-        recordCollectionView.register(UINib(nibName: "RecordCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: RecordCollectionViewCell.identifier)
-
-    }
     @objc func addRecord(){
         //기록을 추가하는 페이지로 이동
         performSegue(withIdentifier: "AddRecord", sender: self)
@@ -70,10 +114,6 @@ class RecordViewController: UIViewController {
         guard let addRecordVc = segue.destination as? AddRecordViewController else { return }
         addRecordVc.getParentCategory = parentCategory
     }
-    func getRecordData(){
-        recordArray = parentCategory?.records.sorted(byKeyPath: "date", ascending: true)
-    }
-
 }
 
 extension RecordViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -114,6 +154,7 @@ extension RecordViewController {
         guideLabel.textAlignment = .center
         guideLabel.text = "기록을 추가해주세요."
         if recordArray?.count == 0 {
+            self.changeSortView.isHidden = true
             emptyView.addSubview(image)
             emptyView.addSubview(guideLabel)
              let sizeWidth = UIScreen.main.bounds.width / 3
@@ -132,6 +173,7 @@ extension RecordViewController {
                 self.emptyView.frame.origin.y = 100
             }, completion: nil)
         } else {
+            self.changeSortView.isHidden = false
             image.removeFromSuperview()
             guideLabel.removeFromSuperview()
             emptyView.removeFromSuperview()

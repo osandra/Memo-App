@@ -14,6 +14,7 @@
 		591E1C1F25D524E0007BF9DA /* HomeCategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 591E1C1E25D524E0007BF9DA /* HomeCategoryCollectionViewCell.xib */; };
 		591E1C2725D59274007BF9DA /* Event.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591E1C2625D59274007BF9DA /* Event.storyboard */; };
 		591E1C2C25D592B1007BF9DA /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E1C2B25D592B1007BF9DA /* RecordViewController.swift */; };
+		5925077D25F331EB007CE990 /* FilterPopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5925077C25F331EB007CE990 /* FilterPopViewController.swift */; };
 		59274C7725D62FFF00FAC1AF /* AddRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59274C7625D62FFF00FAC1AF /* AddRecordViewController.swift */; };
 		5937E81025E011ED003B2FF2 /* ShowOnlyPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5937E80F25E011ED003B2FF2 /* ShowOnlyPhotoViewController.swift */; };
 		595B7DA325DCC4430085F27F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B7DA225DCC4430085F27F /* String+Extension.swift */; };
@@ -55,6 +56,7 @@
 		591E1C1E25D524E0007BF9DA /* HomeCategoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCategoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		591E1C2625D59274007BF9DA /* Event.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Event.storyboard; sourceTree = "<group>"; };
 		591E1C2B25D592B1007BF9DA /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
+		5925077C25F331EB007CE990 /* FilterPopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopViewController.swift; sourceTree = "<group>"; };
 		59274C7625D62FFF00FAC1AF /* AddRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecordViewController.swift; sourceTree = "<group>"; };
 		5937E80F25E011ED003B2FF2 /* ShowOnlyPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOnlyPhotoViewController.swift; sourceTree = "<group>"; };
 		595B7DA225DCC4430085F27F /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -119,6 +121,15 @@
 				59EC837E25D418E200D6C900 /* LaunchScreen.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		5925077B25F331D3007CE990 /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */,
+				5925077C25F331EB007CE990 /* FilterPopViewController.swift */,
+			);
+			path = PopUp;
 			sourceTree = "<group>";
 		};
 		59274C7525D62FD800FAC1AF /* MainCell */ = {
@@ -214,6 +225,7 @@
 		59EC83B525D4216900D6C900 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5925077B25F331D3007CE990 /* PopUp */,
 				59ADFDBA25DABC1E008642FD /* EventCell */,
 				59274C7525D62FD800FAC1AF /* MainCell */,
 				59EC837725D418E000D6C900 /* HomeViewController.swift */,
@@ -223,7 +235,6 @@
 				59274C7625D62FFF00FAC1AF /* AddRecordViewController.swift */,
 				59014AEB25DC390A00466B46 /* RecordDetailViewController.swift */,
 				5937E80F25E011ED003B2FF2 /* ShowOnlyPhotoViewController.swift */,
-				59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -380,6 +391,7 @@
 				59014AE525DC173800466B46 /* UITextField+Extension.swift in Sources */,
 				59ADFDDA25DACF66008642FD /* RecordCollectionViewCell.swift in Sources */,
 				59EC83B725D4236B00D6C900 /* Category.swift in Sources */,
+				5925077D25F331EB007CE990 /* FilterPopViewController.swift in Sources */,
 				59EC83BB25D423DD00D6C900 /* Record.swift in Sources */,
 				59014AE925DC29D700466B46 /* Date+Extension.swift in Sources */,
 				5937E81025E011ED003B2FF2 /* ShowOnlyPhotoViewController.swift in Sources */,
