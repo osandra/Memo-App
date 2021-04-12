@@ -11,13 +11,16 @@ class RecordViewController: UIViewController {
     @IBOutlet weak var showSelectedSortText: UIButton!
     @IBOutlet weak var changeSortView: UIStackView!
     let realm = try! Realm()
-    let emptyView = UIView()
+
     //MARK: - Property
     var recordArray: Results<Record>?
     var parentCategory: Category?
     var sortStandard: String?
-    //info.plist
+    var emptyView = EmptyView(guideText: "기록을 추가해주세요.")
+
+    
     @IBOutlet weak var recordCollectionView: UICollectionView!
+
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -140,42 +143,17 @@ extension RecordViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-
 extension RecordViewController {
     func checkEmpty(){
-        let image: UIImageView = {
-            let emptyImage = UIImageView()
-            emptyImage.image = UIImage(named: "filledClover")
-            emptyImage.contentMode = .scaleAspectFit
-            emptyImage.translatesAutoresizingMaskIntoConstraints = false
-            return emptyImage
-        }()
-        let guideLabel: UILabel = UILabel.makeMediumLabel(fontSize: 16)
-        guideLabel.textAlignment = .center
-        guideLabel.text = "기록을 추가해주세요."
         if recordArray?.count == 0 {
+            view.addSubview(emptyView)
             self.changeSortView.isHidden = true
-            emptyView.addSubview(image)
-            emptyView.addSubview(guideLabel)
-             let sizeWidth = UIScreen.main.bounds.width / 3
-            NSLayoutConstraint.activate([
-                image.topAnchor.constraint(equalTo: emptyView.topAnchor, constant: 50),
-                image.widthAnchor.constraint(equalToConstant: sizeWidth),
-                image.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
-                image.heightAnchor.constraint(equalToConstant: sizeWidth),
-                guideLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 40),
-                guideLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
-            ])
-            self.view.addSubview(emptyView)
-            emptyView.frame = CGRect(x:0, y: 150, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/2)
-            
-            UIView.transition(with: self.view, duration: 0.5, options: [.curveEaseIn], animations: {
-                self.emptyView.frame.origin.y = 100
+            emptyView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+150, width: view.width, height: view.height-200)
+            UIView.transition(with: self.view, duration: 1, options: [.transitionCrossDissolve], animations: {
+                self.view.addSubview(self.emptyView)
             }, completion: nil)
         } else {
-            self.changeSortView.isHidden = false
-            image.removeFromSuperview()
-            guideLabel.removeFromSuperview()
+            view.willRemoveSubview(emptyView)
             emptyView.removeFromSuperview()
         }
     }

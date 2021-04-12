@@ -46,7 +46,9 @@ class CustomPopUpViewController: UIViewController {
         deleteBtn.layer.borderWidth = 1
         deleteBtn.layer.borderColor = UIColor.MyColor.lightGray.cgColor
         
+        delteGuideLabel.textColor = .black
         delteGuideLabel.textAlignment = .center
+        deleteLabel.textColor = .black
         deleteLabel.textAlignment = .center
         delteGuideLabel.font = UIFont.MyFont.SpoqeRegular(customSize: 14)
         deleteLabel.font = UIFont.MyFont.SpoqeMedium(customSize: 16)

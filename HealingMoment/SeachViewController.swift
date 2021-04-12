@@ -16,25 +16,35 @@ class SeachViewController: UIViewController {
             showTable()
         }
     }
-    var emptyFooterLabel: UILabel = UILabel.makeMediumLabel(fontSize: 15)
-    func setLayout(){
-      emptyFooterLabel.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
-      emptyFooterLabel.textAlignment = .center
-      emptyFooterLabel.translatesAutoresizingMaskIntoConstraints = true
-
-      searchBar.placeholder = "제목과 내용으로 검색하기"
-      searchBar.searchTextField.backgroundColor = .systemBackground
-      searchBar.layer.shadowColor = UIColor.gray.cgColor
-      searchBar.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-      searchBar.layer.shadowRadius = 1.0
-      searchBar.layer.shadowOpacity = 0.2
+    var emptyFooterLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.MyFont.SpoqeMedium(customSize: 15)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = true
+        return label
+    }()
+    
+    var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "제목과 내용으로 검색하기"
+        searchBar.searchTextField.backgroundColor = .systemBackground
+        searchBar.layer.shadowColor = UIColor.gray.cgColor
+        searchBar.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        searchBar.layer.shadowRadius = 1.0
+        searchBar.layer.shadowOpacity = 0.2
+        return searchBar
+    }()
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        emptyFooterLabel.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
+        searchBar.frame = CGRect(x: 0,y: 0, width: UIScreen.main.bounds.width - 50, height: 20)
     }
 
     lazy var tableviewHeight: CGFloat = 0.0
+    
     @IBOutlet weak var resultTableView: UITableView!
     
-    var searchBar: UISearchBar = UISearchBar(frame: CGRect(x: 0,y: 0, width: UIScreen.main.bounds.width - 50, height: 20))
-
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -45,8 +55,6 @@ class SeachViewController: UIViewController {
 
         resultTableView.delegate = self
         resultTableView.dataSource = self
-        setLayout()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,8 +106,8 @@ extension SeachViewController: UITableViewDelegate, UITableViewDataSource {
         recordDetailVC.recordData = resultRecordArray?[indexPath.row]
         self.navigationController?.pushViewController(recordDetailVC, animated: true)
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     
         return resultRecordArray?.count ?? 0
     }
 

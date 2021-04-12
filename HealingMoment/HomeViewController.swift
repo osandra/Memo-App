@@ -10,13 +10,18 @@ import RealmSwift
 
 class HomeViewController: UIViewController {
     let realm = try! Realm()
+    
     //MARK: - property
-    @IBOutlet weak var homeCollectionView: UICollectionView!
     var categoryArray: Results<Category>?
+
+    @IBOutlet weak var homeCollectionView: UICollectionView!
     
     @IBOutlet weak var addCategoryButton: UIButton!
     
     @IBOutlet weak var buttonBackgroundLabel: UILabel!
+    
+    let emptyView = EmptyView(guideText: "카테고리를 추가해주세요.")
+
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +68,7 @@ class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationItem.title = " "
     }
+    
     @objc func showSideMenu(){
         
     }
@@ -72,13 +78,12 @@ class HomeViewController: UIViewController {
         self.navigationController?.pushViewController(searchRecordVC, animated: true)
     }
     
-    let emptyView = UIView()
-    
     func getCategoryData(){
         //가장 먼저 등록한 순서대로 정렬해서 보여주기
         categoryArray = realm.objects(Category.self).sorted(byKeyPath: "date", ascending: true)
         homeCollectionView.reloadData()
     }
+    
     // 콜렉션 뷰 레이아웃 관련 설정
     private func setFlowLayout() {
         let flowLayout = UICollectionViewFlowLayout()
@@ -179,37 +184,14 @@ extension HomeViewController {
 //MARK: - add Empty View
 extension HomeViewController {
     func checkEmpty(){
-        emptyView.frame = CGRect(x: 0, y: 100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 200)
-        let image: UIImageView = {
-            let emptyImage = UIImageView()
-            emptyImage.image = UIImage(named: "filledClover")
-            emptyImage.contentMode = .scaleAspectFit
-            emptyImage.translatesAutoresizingMaskIntoConstraints = false
-            return emptyImage
-        }()
-        
-        let guideLabel: UILabel = UILabel.makeMediumLabel(fontSize: 16)
-        guideLabel.textAlignment = .center
-        guideLabel.text = "카테고리를 추가해주세요."
-
         if categoryArray?.count == 0 {
-            emptyView.addSubview(image)
-            emptyView.addSubview(guideLabel)
-            let sizeWidth = UIScreen.main.bounds.width / 3
-            NSLayoutConstraint.activate([
-                image.topAnchor.constraint(equalTo: emptyView.topAnchor, constant: 50),
-                image.widthAnchor.constraint(equalToConstant: sizeWidth),
-                image.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
-                image.heightAnchor.constraint(equalToConstant: sizeWidth),
-                guideLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 40),
-                guideLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
-            ])
+            view.addSubview(emptyView)
+            emptyView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+150, width: view.width, height: view.height-200)
             UIView.transition(with: self.view, duration: 1, options: [.transitionCrossDissolve], animations: {
                 self.view.addSubview(self.emptyView)
             }, completion: nil)
         } else {
-            image.removeFromSuperview()
-            guideLabel.removeFromSuperview()
+            view.willRemoveSubview(emptyView)
             emptyView.removeFromSuperview()
         }
     }

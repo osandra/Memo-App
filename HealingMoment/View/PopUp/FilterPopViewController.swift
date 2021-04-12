@@ -9,7 +9,6 @@ import UIKit
 
 class FilterPopViewController: UIViewController {
 
-    @IBOutlet var Choices: [UIButton]!
     @IBAction func backBtnClicked(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -26,7 +25,7 @@ class FilterPopViewController: UIViewController {
         setLayout()
         contentView.translatesAutoresizingMaskIntoConstraints = true
         recentBtn.translatesAutoresizingMaskIntoConstraints = true
-
+        ratingBtn.translatesAutoresizingMaskIntoConstraints = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,7 +35,7 @@ class FilterPopViewController: UIViewController {
         contentView.frame = CGRect(x: self.view.frame.width-90, y:CGFloat(topHeight ?? 0)+5, width: 80, height: 80)
         contentView.layer.cornerRadius = 5
         recentBtn.frame = CGRect(x: 0, y: 10, width: 80, height: 20)
-        ratingBtn.frame = CGRect(x: 0, y: 30, width: 80, height: 20)
+        ratingBtn.frame = CGRect(x: 0, y: 50, width: 80, height: 20)
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
     

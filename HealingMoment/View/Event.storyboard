@@ -433,8 +433,6 @@
                         <outlet property="contentView" destination="Ais-ML-3m3" id="wJR-St-ODi"/>
                         <outlet property="ratingBtn" destination="DDS-ia-BJm" id="36g-Ir-H15"/>
                         <outlet property="recentBtn" destination="8zS-wg-8nV" id="kav-ZV-omO"/>
-                        <outletCollection property="Choices" destination="8zS-wg-8nV" collectionClass="NSMutableArray" id="hyy-vk-fQa"/>
-                        <outletCollection property="Choices" destination="DDS-ia-BJm" collectionClass="NSMutableArray" id="V4e-yh-fNB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4L-JC-Oe7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

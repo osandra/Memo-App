@@ -28,6 +28,7 @@
 		59AAB70425E129F80088C763 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AAB70325E129F80088C763 /* UIAlertController+Extension.swift */; };
 		59ADFDDA25DACF66008642FD /* RecordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ADFDD825DACF66008642FD /* RecordCollectionViewCell.swift */; };
 		59ADFDDB25DACF66008642FD /* RecordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59ADFDD925DACF66008642FD /* RecordCollectionViewCell.xib */; };
+		59B66D5426248A290034FDBC /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B66D5326248A290034FDBC /* EmptyView.swift */; };
 		59BBE9FD25F2649900CFF975 /* CustomPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */; };
 		59BC4B2925E62E8A002177DF /* UILabel+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC4B2825E62E8A002177DF /* UILabel+extension.swift */; };
 		59BC4B2C25E634FE002177DF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC4B2B25E634FE002177DF /* UIView+Extension.swift */; };
@@ -70,6 +71,7 @@
 		59AAB70325E129F80088C763 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		59ADFDD825DACF66008642FD /* RecordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCollectionViewCell.swift; sourceTree = "<group>"; };
 		59ADFDD925DACF66008642FD /* RecordCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordCollectionViewCell.xib; sourceTree = "<group>"; };
+		59B66D5326248A290034FDBC /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpViewController.swift; sourceTree = "<group>"; };
 		59BC4B2825E62E8A002177DF /* UILabel+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+extension.swift"; sourceTree = "<group>"; };
 		59BC4B2B25E634FE002177DF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -116,9 +118,13 @@
 		591E1C2925D5928C007BF9DA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5925077B25F331D3007CE990 /* PopUp */,
+				59274C7525D62FD800FAC1AF /* MainCell */,
+				59ADFDBA25DABC1E008642FD /* EventCell */,
 				59EC837925D418E000D6C900 /* Main.storyboard */,
 				591E1C2625D59274007BF9DA /* Event.storyboard */,
 				59EC837E25D418E200D6C900 /* LaunchScreen.storyboard */,
+				59B66D5326248A290034FDBC /* EmptyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -151,6 +157,7 @@
 				59ADFDD925DACF66008642FD /* RecordCollectionViewCell.xib */,
 			);
 			name = EventCell;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		59ADFDBF25DAC362008642FD /* Resources */ = {
@@ -163,6 +170,13 @@
 				595B7DA525DCD77C0085F27F /* DefaultData.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		59B66D51262487A80034FDBC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		59EC836725D418E000D6C900 = {
@@ -186,6 +200,7 @@
 		59EC837225D418E000D6C900 /* HealingMoment */ = {
 			isa = PBXGroup;
 			children = (
+				59B66D51262487A80034FDBC /* ViewModel */,
 				59EC838125D418E200D6C900 /* Info.plist */,
 				59ADFDBF25DAC362008642FD /* Resources */,
 				59EC83B425D4215300D6C900 /* Model */,
@@ -225,9 +240,6 @@
 		59EC83B525D4216900D6C900 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5925077B25F331D3007CE990 /* PopUp */,
-				59ADFDBA25DABC1E008642FD /* EventCell */,
-				59274C7525D62FD800FAC1AF /* MainCell */,
 				59EC837725D418E000D6C900 /* HomeViewController.swift */,
 				596AA37A25E539600042FD4D /* SeachViewController.swift */,
 				59EC83BE25D426C200D6C900 /* AddCategoryViewController.swift */,
@@ -391,6 +403,7 @@
 				59014AE525DC173800466B46 /* UITextField+Extension.swift in Sources */,
 				59ADFDDA25DACF66008642FD /* RecordCollectionViewCell.swift in Sources */,
 				59EC83B725D4236B00D6C900 /* Category.swift in Sources */,
+				59B66D5426248A290034FDBC /* EmptyView.swift in Sources */,
 				5925077D25F331EB007CE990 /* FilterPopViewController.swift in Sources */,
 				59EC83BB25D423DD00D6C900 /* Record.swift in Sources */,
 				59014AE925DC29D700466B46 /* Date+Extension.swift in Sources */,
