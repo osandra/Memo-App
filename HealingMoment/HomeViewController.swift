@@ -13,7 +13,9 @@ class HomeViewController: UIViewController {
     
     //MARK: - property
     var categoryArray: Results<Category>?
-
+    
+    private var viewModels = [HomeCategoryCollectionViewCellViewModel]()
+    
     @IBOutlet weak var homeCollectionView: UICollectionView!
     
     @IBOutlet weak var addCategoryButton: UIButton!
@@ -25,13 +27,16 @@ class HomeViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        getCategoryData()
+
         print(Realm.Configuration.defaultConfiguration.fileURL ?? "")
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self
-        homeCollectionView.register(UINib(nibName: "HomeCategoryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: HomeCategoryCollectionViewCell.identifier)
+        homeCollectionView.register(HomeCategoryCollectionViewCell.self, forCellWithReuseIdentifier: HomeCategoryCollectionViewCell.identifier)
+        
         addCategoryButton.addTarget(self, action: #selector(addCategory), for: .touchUpInside)
+        
         setFlowLayout()
-        getCategoryData()
         checkEmpty()
         setLayout()
     }
@@ -48,6 +53,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getCategoryData()
         self.navigationItem.title = "힐링 모먼트"
         self.navigationController?.navigationBar.shadowImage = UIImage() //nav 바 밑에 있는 라인 없어지게
         self.navigationController?.navigationBar.tintColor = UIColor.MyColor.coral
@@ -63,14 +69,9 @@ class HomeViewController: UIViewController {
         homeCollectionView.reloadData()
     }
 
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationItem.title = " "
-    }
-    
-    @objc func showSideMenu(){
-        
     }
 
     @objc func goToSearchView(){
@@ -79,11 +80,20 @@ class HomeViewController: UIViewController {
     }
     
     func getCategoryData(){
+        self.viewModels = []
         //가장 먼저 등록한 순서대로 정렬해서 보여주기
         categoryArray = realm.objects(Category.self).sorted(byKeyPath: "date", ascending: true)
-        homeCollectionView.reloadData()
+        categoryArray?.forEach({ (category) in
+            viewModels.append(HomeCategoryCollectionViewCellViewModel(
+                                name: category.name,
+                                buttonColorName: category.colorHex,
+                                tag: category.hashValue))
+        })
+
+        self.homeCollectionView.reloadData()
     }
     
+
     // 콜렉션 뷰 레이아웃 관련 설정
     private func setFlowLayout() {
         let flowLayout = UICollectionViewFlowLayout()
@@ -108,7 +118,11 @@ class HomeViewController: UIViewController {
 
 //MARK: - collection View Delegate & Datasource
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, HomeCategoryCollectionViewCellDelegate {
+    
+    func HomeCategoryCollectionViewCellDidTapImage(_ cell: HomeCategoryCollectionViewCell) {
+        showDeleteAlert(tag: cell.moreimageView.tag)
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //다른 스토리보드로 이동
@@ -117,31 +131,36 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         recordVC.parentCategory = categoryArray?[indexPath.row]
         self.navigationController?.pushViewController(recordVC, animated: true)
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categoryArray?.count ?? 0
+        return viewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = homeCollectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCollectionViewCell.identifier, for: indexPath) as! HomeCategoryCollectionViewCell
-        let colorName = categoryArray?[indexPath.row].colorHex ?? "white"
-        cell.cartegoryBtnColor.backgroundColor = UIViewController.returnColor(name: colorName)
-        cell.categoryName.text = categoryArray?[indexPath.row].name
-        cell.categoryName.textColor = .black
-        //추후 해당 row에 있는 카테고리를 사용하여 카테고리를 삭제할 것이므로, 이와 같은 값을 가지는 태그 생성
-        cell.deleteButton.tag = indexPath.row
-        cell.deleteButton.addTarget(self, action: #selector(self.showDeleteAlert), for: .touchUpInside)
+        
+        guard let cell = homeCollectionView.dequeueReusableCell(
+                withReuseIdentifier: HomeCategoryCollectionViewCell.identifier,
+                for: indexPath) as? HomeCategoryCollectionViewCell else {
+            fatalError()
+        }
+        cell.delegate = self
+        cell.configure(with: viewModels[indexPath.row])
         return cell
     }
 }
 
+
 //MARK: - Alert: 카테고리 삭제 및 수정(색상, 이름)
 extension HomeViewController {
-    @objc func showDeleteAlert(sender: UIButton){
-        let categoryItemName = self.categoryArray?[sender.tag].name ?? ""
+    @objc func showDeleteAlert(tag: Int){
+        guard let categoryIndex = self.categoryArray?.firstIndex(where: { (category) -> Bool in
+            category.hashValue == tag
+        }) else {return}
+        let categoryItemName = self.categoryArray?[categoryIndex].name ?? ""
         let alert = UIAlertController(title: "\(categoryItemName) 카테고리", message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정", style: .default) { (action) in
             guard let addCategoryVC = self.storyboard?.instantiateViewController(identifier: "AddCategoryViewController") as? AddCategoryViewController else { return }
-            addCategoryVC.category = self.categoryArray?[sender.tag]
+            addCategoryVC.category = self.categoryArray?[categoryIndex]
             self.navigationController?.pushViewController(addCategoryVC, animated: true)
         }
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive, handler: { (action) in
@@ -150,14 +169,17 @@ extension HomeViewController {
             popUpVC.modalPresentationStyle = .overCurrentContext
             popUpVC.modalTransitionStyle = .crossDissolve
             popUpVC.deleteClosure = {
-                if let categoryItem = self.categoryArray?[sender.tag] {
+                if let categoryItem = self.categoryArray?[categoryIndex] {
                     do {
                         let childRecords = categoryItem.records
                         try self.realm.write {
                             self.realm.delete(childRecords)
-                            
+
                             self.realm.delete(categoryItem)
                             DispatchQueue.main.async {
+                                self.viewModels = []
+                                self.getCategoryData()
+                                
                                 UIView.transition(with: self.homeCollectionView, duration: 0.3, options: .transitionCrossDissolve, animations: {self.homeCollectionView.reloadData()},
                                                   completion: { action in
                                                     UIView.transition(with: self.homeCollectionView, duration: 0.5, options: .curveLinear, animations: {self.checkEmpty()}, completion: nil)
