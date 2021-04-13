@@ -29,6 +29,7 @@
 		59ADFDDB25DACF66008642FD /* RecordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59ADFDD925DACF66008642FD /* RecordCollectionViewCell.xib */; };
 		59B66D5426248A290034FDBC /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B66D5326248A290034FDBC /* EmptyView.swift */; };
 		59B66D572624996A0034FDBC /* HomeCategoryCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B66D562624996A0034FDBC /* HomeCategoryCollectionViewCellViewModel.swift */; };
+		59B66D5E262608810034FDBC /* SearchTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B66D5D262608810034FDBC /* SearchTableViewCellViewModel.swift */; };
 		59BBE9FD25F2649900CFF975 /* CustomPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */; };
 		59BC4B2925E62E8A002177DF /* UILabel+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC4B2825E62E8A002177DF /* UILabel+extension.swift */; };
 		59BC4B2C25E634FE002177DF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC4B2B25E634FE002177DF /* UIView+Extension.swift */; };
@@ -72,6 +73,7 @@
 		59ADFDD925DACF66008642FD /* RecordCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordCollectionViewCell.xib; sourceTree = "<group>"; };
 		59B66D5326248A290034FDBC /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		59B66D562624996A0034FDBC /* HomeCategoryCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCategoryCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
+		59B66D5D262608810034FDBC /* SearchTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		59BBE9FC25F2649900CFF975 /* CustomPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopUpViewController.swift; sourceTree = "<group>"; };
 		59BC4B2825E62E8A002177DF /* UILabel+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+extension.swift"; sourceTree = "<group>"; };
 		59BC4B2B25E634FE002177DF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				59B66D562624996A0034FDBC /* HomeCategoryCollectionViewCellViewModel.swift */,
+				59B66D5D262608810034FDBC /* SearchTableViewCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				595B7DA325DCC4430085F27F /* String+Extension.swift in Sources */,
 				59B66D572624996A0034FDBC /* HomeCategoryCollectionViewCellViewModel.swift in Sources */,
 				596AA37B25E539600042FD4D /* SeachViewController.swift in Sources */,
+				59B66D5E262608810034FDBC /* SearchTableViewCellViewModel.swift in Sources */,
 				59C3DBEB25D9062F0011CD05 /* UIViewController+Extension.swift in Sources */,
 				591E1C1C25D52408007BF9DA /* HomeCategoryCollectionViewCell.swift in Sources */,
 				59EC837825D418E000D6C900 /* HomeViewController.swift in Sources */,

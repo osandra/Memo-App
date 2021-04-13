@@ -8,12 +8,12 @@
 import UIKit
 
 class RecordCollectionViewCell: UICollectionViewCell {
-    
+    static let identifier = "RecordCollectionViewCell"
+
     @IBOutlet weak var recordPhoto: UIImageView!
     @IBOutlet weak var recordTitle: UILabel!
     var getBackgroundColor: UIColor = UIColor.white
     @IBOutlet weak var ratingNum: UIButton!
-    static let identifier = "RecordCollectionViewCell"
     override func awakeFromNib() {
         super.awakeFromNib()
         self.clipsToBounds = true

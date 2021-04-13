@@ -13,7 +13,7 @@ class SeachViewController: UIViewController {
     let realm = try! Realm()
     var resultRecordArray: Results<Record>? {
         didSet {
-            showTable()
+            setViewModel()
         }
     }
     var emptyFooterLabel: UILabel = {
@@ -34,17 +34,13 @@ class SeachViewController: UIViewController {
         searchBar.layer.shadowOpacity = 0.2
         return searchBar
     }()
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        emptyFooterLabel.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
-        searchBar.frame = CGRect(x: 0,y: 0, width: UIScreen.main.bounds.width - 50, height: 20)
-    }
+    @IBOutlet weak var resultTableView: UITableView!
+
+
 
     lazy var tableviewHeight: CGFloat = 0.0
     
-    @IBOutlet weak var resultTableView: UITableView!
-    
+    var viewModels = [SearchTableViewCellViewModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
@@ -52,19 +48,33 @@ class SeachViewController: UIViewController {
         resultTableView.showsVerticalScrollIndicator = false
         resultTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         resultTableView.tableFooterView = emptyFooterLabel
-
         resultTableView.delegate = self
         resultTableView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        showTable()
+        setViewModel()
         let rightBarbutton = UIBarButtonItem(customView: searchBar)
         self.navigationItem.rightBarButtonItem = rightBarbutton
     }
     
-    func showTable(){
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        emptyFooterLabel.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100)
+        searchBar.frame = CGRect(x: 0,y: 0, width: UIScreen.main.bounds.width - 50, height: 20)
+    }
+    
+    func setViewModel(){
+        resultRecordArray?.forEach({ (record) in
+            let image = UIImage(data: record.imageData ?? DefaultData.defaultData!)
+            viewModels.append(SearchTableViewCellViewModel(
+                                title: record.title,
+                                image: image,
+                                description: record.descriptionText,
+                                ratingText: "\(record.healingRating)"))
+        })
+        
         resultTableView.reloadData()
     }
     
@@ -96,6 +106,7 @@ extension SeachViewController: UISearchBarDelegate {
     }
 }
 
+//MARK: - TableView
 extension SeachViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
@@ -112,11 +123,8 @@ extension SeachViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = resultTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
-        cell.recordImage.image = UIImage(data: resultRecordArray?[indexPath.row].imageData ?? DefaultData.defaultData!)
-        cell.titleLabel.text = resultRecordArray?[indexPath.row].title
-        cell.descriptionTextView.text = resultRecordArray?[indexPath.row].descriptionText
-        cell.ratingLabel.text = String((resultRecordArray?[indexPath.row].healingRating)!)
+        guard let cell = resultTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else { fatalError() }
+        cell.configure(with: viewModels[indexPath.row])
         cell.selectionStyle = .none
         return cell
     }

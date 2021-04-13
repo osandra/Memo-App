@@ -14,7 +14,6 @@ class ColorCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.contentView.layer.cornerRadius = 10
         self.contentView.clipsToBounds = true
         self.clipsToBounds = false
